@@ -7,4 +7,5 @@
     "handlebars": ">=1.3.0",
     "ember-data": "^1.0.0-beta.8"<% previous = true } %><%if (options.bootstrap){ if(previous) { %>,<% }%>
     "bootstrap": "~3.3.2"<% previous = true } %>
+  }
 }
