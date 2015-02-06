@@ -46,6 +46,26 @@ module.exports = generators.Base.extend({
       type: 'Boolean',
       defaults: false
     });
+
+    this.option('bootstrap',{
+      desc: 'Include bootstrap',
+      type: 'Boolean',
+      defaults: false
+    });
+
+    this.option('ember',{
+      desc: 'Include ember',
+      type: 'Boolean',
+      defaults: false
+    });
+
+
+    this.option('install',{
+      desc: 'Install npm and bower dependencies',
+      type: 'Boolean',
+      defaults: false
+    });
+
   },
   method1: function(){console.log("method 1 just ran");},
   method2: function(){console.log("method 2 just ran");},
@@ -54,9 +74,15 @@ module.exports = generators.Base.extend({
   packageJSON: function(){
     this.template('_package.json', 'package.json');
   },
-
+  packageBower: function(){
+    this.template('_bower.json', 'bower.json');
+  },
   generateIndex: function(){
     this.template('index.php', '<%= paths.app %>/index.php');
+  },
+
+  install: function(){
+    if(this.options.install){this.installDependencies();}
   }
 });
 
