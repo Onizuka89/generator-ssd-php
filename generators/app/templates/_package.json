@@ -1,0 +1,17 @@
+{
+  "name": "<%= _.slugify(appname) %>",
+  "description": "Generated php livereload content",
+  "version": "0.1.0",
+  "devDependencies": {
+    "connect-livereload": "^0.5.2",
+    "grunt": "^0.4.5",<% if (options.coffee) { %>
+    "grunt-contrib-coffee": "^0.11.0",<% } if(options.sass){ %>
+    "grunt-sass": "^0.17.0",<% } %>
+    "grunt-contrib-watch": "^0.5.2",
+    "grunt-php": "^1.1.1",
+    "load-grunt-tasks": "^0.1.0"
+  },
+  "engines":{
+    "node": ">=0.8.0"
+  }
+}
