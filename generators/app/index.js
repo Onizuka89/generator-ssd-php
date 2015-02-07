@@ -5,6 +5,7 @@ module.exports = generators.Base.extend({
     app: 'app',
     bower_components: 'bower_components'
   },
+
   prompting: function(){
     var done = this.async();
 
@@ -40,6 +41,7 @@ module.exports = generators.Base.extend({
       ]
     }, function(answers){
       this.log(answers.choices);
+      //used to prevent mocha from failing when attempting to use length on choices.
       
       // Reset selectable options
       this.options.coffee = false;
@@ -128,6 +130,9 @@ module.exports = generators.Base.extend({
   },
   generateIndex: function(){
     this.template('index.php', '<%= paths.app %>/index.php');
+  },
+  generateGrunt: function(){
+    this.template('Gruntfile.js', 'Gruntfile.js');
   },
 
   install: function(){
