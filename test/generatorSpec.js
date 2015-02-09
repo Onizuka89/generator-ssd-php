@@ -12,7 +12,6 @@ var testData = [
     ]
   }
 },
-
 {
   title: "Test of ssd-php generator with SASS",
   arguments: [
@@ -24,7 +23,6 @@ var testData = [
     ]
   }
 },
-
 {
   title: "Test of ssd-php generator with jQuery",
   arguments: [
@@ -33,6 +31,40 @@ var testData = [
   prompt:{
     choices:[
       'jQuery'
+    ]
+  }
+},
+{
+  title: 'Test of ssd-php generator with Ember',
+  arguments: [
+    'ssd-php'
+  ],
+  prompt: {
+    choices:[
+      'Ember'
+    ]
+  }
+},
+{
+  title: 'Test of ssd-php generator with CoffeeScript',
+  arguments: [
+    'ssd-php'
+  ],
+  prompt:{
+    choices:[
+      'CoffeeScript'
+    ]
+  }
+},
+{ 
+  title: 'Test of ssd-php generator with SASS and Ember',
+  arguments: [
+    'ssd-php'
+  ],
+  prompt: {
+    choices: [
+      'Ember',
+      'SASS'
     ]
   }
 }
@@ -91,37 +123,60 @@ for(var i = 0; i < testData.length; i++){
 
       describe('Validate "package.json"', function(){
         var json = null;
-        it('should parse', function(){
+        before(function(){
           var file = fs.readFileSync(path.join(__dirname, './tmp', 'package.json'),"utf8");
           try{
             json = JSON.parse(file);
           }catch(e){
             json = null;
-            should.fail('JSON was not parsed.');
+            should.fail('JSON was not parsed. Skips further testing of "package.json".');
           }
-
         });
-
-        if(haveChoice(object, 'SASS')){
-          it('should include SASS', function(){
-            should.exist(json.devDependencies.sass);
-          });
-        }
+        it('should parse', function(){
+          should.exist(json);
+        });
+        describe('package.json should include these:', function(){
+          if(haveChoice(object, 'SASS')){
+            it('should include SASS', function(){
+              should.exist(json.devDependencies.sass);
+            });
+          }
+        });
 
       });
 
       describe('Validate "bower.json"', function(){
         var json = null;
-        it('should parse', function(){
+        before(function(){
           var file = fs.readFileSync(path.join(__dirname, './tmp', 'bower.json'),"utf8");
           try{
             json = JSON.parse(file);
           }catch(e){
             json = null;
-            should.fail('JSON was not parsed.');
+            should.fail('JSON was not parsed. Skips futher testing of "bower.json".');
           }
         });
-
+        it('should parse', function(){
+          should.exist(json);
+        });
+        describe('bower should include these:', function(){
+          if(haveChoice(object, 'Ember') || haveChoice(object, 'jQuery')){
+            it('should include jQuery', function(){
+                should.exist(json.dependencies.jquery);
+            });
+          }
+          if(haveChoice(object, 'Ember')){
+            it('should include Ember', function(){
+              should.exist(json.dependencies.ember);
+            });
+            it('should include Ember-data',function(){
+              should.exist(json.dependencies['ember-data']);
+            });
+            it('should include handlebars', function(){
+              should.exist(json.dependencies.handlebars);
+            });
+          }
+        });
       });
 
 
